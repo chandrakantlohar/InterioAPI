@@ -12,48 +12,48 @@ namespace InterioAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class UserRegistersController : ControllerBase
     {
         private readonly InterioContext _context;
 
-        public ProductsController(InterioContext context)
+        public UserRegistersController(InterioContext context)
         {
             _context = context;
         }
 
-        // GET: api/Products
+        // GET: api/UserRegisters
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<UserRegister>>> GetUserRegisters()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.UserRegisters.ToListAsync();
         }
 
-        // GET: api/Products/5
+        // GET: api/UserRegisters/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<UserRegister>> GetUserRegister(int id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var userRegister = await _context.UserRegisters.FindAsync(id);
 
-            if (product == null)
+            if (userRegister == null)
             {
                 return NotFound();
             }
 
-            return product;
+            return userRegister;
         }
 
-        // PUT: api/Products/5
+        // PUT: api/UserRegisters/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public async Task<IActionResult> PutUserRegister(int id, UserRegister userRegister)
         {
-            if (id != product.Id)
+            if (id != userRegister.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(product).State = EntityState.Modified;
+            _context.Entry(userRegister).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace InterioAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
+                if (!UserRegisterExists(id))
                 {
                     return NotFound();
                 }
@@ -74,37 +74,37 @@ namespace InterioAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Products
+        // POST: api/UserRegisters
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<String>> PostProduct(String product)
+        public async Task<ActionResult<UserRegister>> PostUserRegister(UserRegister userRegister)
         {
-           //_context.Products.Add(product);
+            _context.UserRegisters.Add(userRegister);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = 1 }, product);
+            return CreatedAtAction("GetUserRegister", new { id = userRegister.Id }, userRegister);
         }
 
-        // DELETE: api/Products/5
+        // DELETE: api/UserRegisters/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Product>> DeleteProduct(int id)
+        public async Task<ActionResult<UserRegister>> DeleteUserRegister(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
+            var userRegister = await _context.UserRegisters.FindAsync(id);
+            if (userRegister == null)
             {
                 return NotFound();
             }
 
-            _context.Products.Remove(product);
+            _context.UserRegisters.Remove(userRegister);
             await _context.SaveChangesAsync();
 
-            return product;
+            return userRegister;
         }
 
-        private bool ProductExists(int id)
+        private bool UserRegisterExists(int id)
         {
-            return _context.Products.Any(e => e.Id == id);
+            return _context.UserRegisters.Any(e => e.Id == id);
         }
     }
 }
