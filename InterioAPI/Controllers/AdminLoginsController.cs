@@ -12,48 +12,48 @@ namespace InterioAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class AdminLoginsController : ControllerBase
     {
         private readonly InterioContext _context;
 
-        public ProductsController(InterioContext context)
+        public AdminLoginsController(InterioContext context)
         {
             _context = context;
         }
 
-        // GET: api/Products
+        // GET: api/AdminLogins
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<Login>>> GetLogins()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Logins.ToListAsync();
         }
 
-        // GET: api/Products/5
+        // GET: api/AdminLogins/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<Login>> GetLogin(int id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var login = await _context.Logins.FindAsync(id);
 
-            if (product == null)
+            if (login == null)
             {
                 return NotFound();
             }
 
-            return product;
+            return login;
         }
 
-        // PUT: api/Products/5
+        // PUT: api/AdminLogins/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public async Task<IActionResult> PutLogin(int id, Login login)
         {
-            if (id != product.Id)
+            if (id != login.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(product).State = EntityState.Modified;
+            _context.Entry(login).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace InterioAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
+                if (!LoginExists(id))
                 {
                     return NotFound();
                 }
@@ -74,45 +74,37 @@ namespace InterioAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Products
+        // POST: api/AdminLogins
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<Login>> PostLogin(Login login)
         {
-           
-            //productName: req.body.productName,
-            //description: req.body.description,
-            //price: req.body.price,
-            //image: req.body.image,
-            //createdAt: new Date(),
-            //updatedAt: new Date()
-
-            _context.Products.Add(product);
+            _context.Logins.Add(login);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+            return CreatedAtAction("GetLogin", new { id = login.Id }, login);
         }
 
-        // DELETE: api/Products/5
+        // DELETE: api/AdminLogins/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Product>> DeleteProduct(int id)
+        public async Task<ActionResult<Login>> DeleteLogin(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
+            var login = await _context.Logins.FindAsync(id);
+            if (login == null)
             {
                 return NotFound();
             }
 
-            _context.Products.Remove(product);
+            _context.Logins.Remove(login);
             await _context.SaveChangesAsync();
 
-            return product;
+            return login;
         }
 
-        private bool ProductExists(int id)
+        private bool LoginExists(int id)
         {
-            return _context.Products.Any(e => e.Id == id);
+            return _context.Logins.Any(e => e.Id == id);
         }
     }
 }
