@@ -20,7 +20,6 @@ namespace InterioAPI.Controllers
         {
             _context = context;
         }
-
         // GET: api/UserRegisters
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserRegister>>> GetUserRegisters()
